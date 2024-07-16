@@ -364,6 +364,7 @@
 "Assets/FloatingEntities/Scripts/SplashGenerator.cs"
 "Assets/FloatingEntities/Scripts/Tools/Proxies.cs"
 "Assets/FloatingEntities/Scripts/WakeGenerator.cs"
+"Assets/MainMenu.cs"
 -langversion:9.0
 /deterministic
 /optimize+
