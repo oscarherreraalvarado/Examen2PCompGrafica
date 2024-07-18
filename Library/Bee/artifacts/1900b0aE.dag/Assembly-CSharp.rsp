@@ -367,6 +367,7 @@
 "Assets/FloatingEntities/Scripts/Tools/Proxies.cs"
 "Assets/FloatingEntities/Scripts/WakeGenerator.cs"
 "Assets/MainMenu.cs"
+"Assets/Scripts/Controlador Vida.cs"
 "Assets/Scripts/Movimiento.cs"
 "Assets/Scripts/Salto.cs"
 "Assets/Stylized_Astronaut/Character/AstronautPlayer.cs"
