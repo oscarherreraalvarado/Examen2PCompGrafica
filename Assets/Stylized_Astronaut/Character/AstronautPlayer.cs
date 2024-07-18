@@ -24,8 +24,10 @@ namespace AstronautPlayer
         {
             controller = GetComponent<CharacterController>();
             anim = gameObject.GetComponentInChildren<Animator>();
+            //vida
             controladorVida = GameObject.Find("Controlador Vida").GetComponent<ControladorVida>();
 
+        
             // Guardar la posición inicial del jugador
             startPosition = transform.position;
         }
