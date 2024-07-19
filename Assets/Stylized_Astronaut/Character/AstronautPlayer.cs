@@ -16,6 +16,9 @@ namespace AstronautPlayer
         public float gravity = 20.0f;
         private Vector3 moveDirection = Vector3.zero; // Vector de movimiento
 
+        public float slideSpeed = 10.0f; // Velocidad de deslizamiento
+        private bool isSliding = false; // Flag para controlar si el jugador está deslizándose
+
         private Transform platform = null;
         private int jumpCount = 0; // Contador de saltos
         private int maxJumps = 2; // Número máximo de saltos permitidos (doble salto)
@@ -27,7 +30,6 @@ namespace AstronautPlayer
             //vida
             controladorVida = GameObject.Find("Controlador Vida").GetComponent<ControladorVida>();
 
-        
             // Guardar la posición inicial del jugador
             startPosition = transform.position;
         }
@@ -72,6 +74,20 @@ namespace AstronautPlayer
                 anim.SetInteger("AnimationPar", 0);
             }
 
+            // Iniciar o continuar deslizamiento
+            if (Input.GetKey(KeyCode.C))
+            {
+                if (!isSliding)
+                {
+                    isSliding = true;
+                }
+                Slide();
+            }
+            else
+            {
+                isSliding = false;
+            }
+
             // Control de la rotación del jugador
             float turn = Input.GetAxis("Horizontal");
             transform.Rotate(0, turn * turnSpeed * Time.deltaTime, 0);
@@ -79,6 +95,28 @@ namespace AstronautPlayer
             // Aplicar movimiento y gravedad
             controller.Move(moveDirection * Time.deltaTime);
             moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        void Slide()
+        {
+            // Obtener la normal del suelo en el que está el jugador
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit))
+            {
+                // Calcular la dirección de deslizamiento basada en la normal de la superficie
+                Vector3 slideDirection = new Vector3(hit.normal.x, -hit.normal.y, hit.normal.z) * slideSpeed;
+
+                // Comprobar si la superficie es lo suficientemente horizontal para detener el deslizamiento
+                float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
+                if (slopeAngle > 5.0f) // Ajusta este valor según lo que consideres horizontal
+                {
+                    moveDirection = slideDirection;
+                }
+                else
+                {
+                    isSliding = false;
+                }
+            }
         }
 
         void OnControllerColliderHit(ControllerColliderHit hit)
